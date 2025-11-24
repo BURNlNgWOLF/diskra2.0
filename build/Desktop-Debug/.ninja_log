@@ -1,0 +1,12 @@
+# ninja log v7
+1	25	1763802054396653567	Discra_autogen/timestamp	464c4e0ebf7204a1
+1	25	1763802054396653567	Discra_autogen/mocs_compilation.cpp	464c4e0ebf7204a1
+1	25	1763802054396653567	/home/kisser/bullshit/OS/Discra/build/Desktop-Debug/Discra_autogen/timestamp	464c4e0ebf7204a1
+1	25	1763802054396653567	/home/kisser/bullshit/OS/Discra/build/Desktop-Debug/Discra_autogen/mocs_compilation.cpp	464c4e0ebf7204a1
+101	808	1763537351380820745	CMakeFiles/Discra.dir/Discra_autogen/mocs_compilation.cpp.o	21d9a660ddaf7b8d
+102	886	1763537351380820745	CMakeFiles/Discra.dir/main.cpp.o	1176d8d387c58f6a
+25	831	1763802054419986524	CMakeFiles/Discra.dir/mainwindow.cpp.o	20e06ac93f3ecdb8
+831	1003	1763802055223306903	Discra	5c6c04dde53275c9
+25	703	1763802054419986524	CMakeFiles/Discra.dir/math.cpp.o	707b14067d7c0d48
+1	233	1763971321759937802	build.ninja	a8c7e730aee3385e
+1	233	1763971321759937802	/home/kisser/bullshit/OS/Discra/build/Desktop-Debug/cmake_install.cmake	a8c7e730aee3385e
