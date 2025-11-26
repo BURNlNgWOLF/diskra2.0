@@ -16,9 +16,17 @@ void MainWindow::on_submitInput_clicked(){
 
     //ui->functionInput->clear();
 
-    int funcLength = HowLongIsBoolFunc(text);
-    std::cout << funcLength << std::endl;
-    polynomZhegalkina({false,false,true,true,false,true,true,true,true,false,true,false,true,true,true,true});
+    //int funcLength = HowLongIsBoolFunc(text);
+    //std::cout << funcLength << std::endl;
+    //std::cout << "^^^" << std::endl;
+    std::vector<bool> inputed = QStringTovector(text);
+    std::vector<bool> zheg = polynomZhegalkina(inputed);
+    std::vector<std::vector<bool>> truth = generateTruthTable(zheg);
+    //printBoolMatrix(truth);
+    std::cout << "and the zhegalkin is: ";
+    printBoolVector(zheg);
+
+
 }
 MainWindow::~MainWindow()
 {
