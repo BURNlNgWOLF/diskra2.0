@@ -11,5 +11,7 @@ std::string zhegalkinToString(std::vector<bool> polynom);
 void printBoolMatrix(std::vector<std::vector<bool>> mat);
 void printBoolVector(std::vector<bool> vec);
 void displayTruthTableFromVector(QTableWidget* table, const std::vector<bool>& outputs);
+std::string calculateSDNF(const std::vector<bool>& outputs);
+std::string calculateSKNF(const std::vector<bool>& outputs);
 
 #endif // MATH_H

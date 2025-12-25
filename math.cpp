@@ -4,7 +4,10 @@
 #include <vector>
 #include <string>
 #include <QTableWidgetItem>
+#include <sstream>
+
 using std::vector;
+
 int HowLongIsBoolFunc(QString func){
     const int length = func.length();
     for (QChar c: func){
@@ -15,6 +18,7 @@ int HowLongIsBoolFunc(QString func){
     return length;
 }
 
+//only useful for debugging
 void printBoolVector(vector<bool> vec){
 
     for (bool num : vec) {
@@ -22,6 +26,8 @@ void printBoolVector(vector<bool> vec){
     }
     std::cout << std::endl;
 }
+
+//not useful because matrix is not used
 void printBoolMatrix(std::vector<std::vector<bool>> mat){
     for(int i = 0; i < mat.size(); i++){
       for(int j = 0; j < mat[0].size(); j++){
@@ -45,7 +51,7 @@ vector<bool> QStringTovector(QString func){
 vector<bool> polynomZhegalkina(vector<bool> topRow){
     vector<bool> bottomRow = {false};
     vector<bool> output;
-    std::cout << "Zhegalkatron activated" << std::endl;
+    //std::cout << "Zhegalkatron activated" << std::endl;
     int size = topRow.size();
     for (int i = 0; i < size; i++){
         output.push_back(topRow[0]);
@@ -67,6 +73,8 @@ vector<bool> polynomZhegalkina(vector<bool> topRow){
     printBoolVector(output);
     return {};
 }
+
+// Not really useful as all calculation are made on a funcion itself rather than using matrix, but could be useful for something else.
 vector<vector<bool>> generateTruthTable(vector<bool> boolFunc) {
     int size = boolFunc.size();
     int n = 0;
@@ -84,7 +92,7 @@ vector<vector<bool>> generateTruthTable(vector<bool> boolFunc) {
 }
 
 std::string zhegalkinToString(vector<bool> polynom){
-std::string result;
+    std::string result;
     int n = polynom.size();
 
     if (n == 0) return result;
@@ -92,7 +100,7 @@ std::string result;
     for (int i = 0; i < n; i++) {
         if (polynom[i]) {
             if (!result.empty()) {
-                result += " + ";
+                result += " ⊕ ";
             }
 
             if (i == 0) {
@@ -135,7 +143,6 @@ void displayTruthTableFromVector(QTableWidget* table, const std::vector<bool>& o
         return;
     }
 
-    // Determine number of input variables using bit shifts
     int numVars = 0;
     if (N > 1) {
         unsigned int value = static_cast<unsigned int>(N - 1);
@@ -165,22 +172,103 @@ void displayTruthTableFromVector(QTableWidget* table, const std::vector<bool>& o
                           new QTableWidgetItem(bit ? "1" : "0"));
         }
 
-        // Output column (f) — colored!
         bool outputVal = outputs[row];
         QString outputText = outputVal ? "1" : "0";
         QTableWidgetItem* outputItem = new QTableWidgetItem(outputText);
 
         if (outputVal) {
-            outputItem->setForeground(QColor(Qt::blue));      // or QColor("#FF0000")
+            outputItem->setForeground(QColor(Qt::blue));
         } else {
-            outputItem->setForeground(QColor(Qt::red));     // or QColor("#0000FF")
+            outputItem->setForeground(QColor(Qt::red));
         }
 
-        // Optional: center-align
         outputItem->setTextAlignment(Qt::AlignCenter);
 
         table->setItem(static_cast<int>(row), numVars, outputItem);
     }
 }
 
+std::string calculateSDNF(const std::vector<bool>& f) {
+    size_t n = 0;
+    size_t tableSize = 1;
+    while (tableSize < f.size()) {
+        ++n;
+        tableSize <<= 1;
+    }
 
+    std::vector<std::string> minterms;
+
+    for (size_t i = 0; i < tableSize; ++i) {
+        //assume that each missing element is 0
+        bool output = (i < f.size()) ? f[i] : false;
+        if (output) {
+            std::ostringstream term;
+            bool first = true;
+            for (size_t var = 0; var < n; ++var) {
+                if (!first) term << " ∧ ";
+                first = false;
+                //check each variable
+                if ((i >> var) & 1) {
+                    term << "x" << (var + 1);
+                } else {
+                    term << "¬x" << (var + 1);
+                }
+            }
+            if (n == 0) {
+                term << "1";
+            }
+            minterms.push_back("(" + term.str() + ")");
+        }
+    }
+
+    if (minterms.empty()) return "0";
+    //concatinate stuff
+    std::ostringstream result;
+    for (size_t i = 0; i < minterms.size(); ++i) {
+        if (i > 0) result << " ∨ ";
+        result << minterms[i];
+    }
+    return result.str();
+}
+
+std::string calculateSKNF(const std::vector<bool>& f) {
+    size_t n = 0;
+    size_t tableSize = 1;
+    while (tableSize < f.size()) {
+        ++n;
+        tableSize <<= 1;
+    }
+
+    std::vector<std::string> maxterms;
+
+    for (size_t i = 0; i < tableSize; ++i) {
+        bool output = (i < f.size()) ? f[i] : false;
+        if (!output) {
+            std::ostringstream term;
+            bool first = true;
+            for (size_t var = 0; var < n; ++var) {
+                if (!first) term << " ∨ ";
+                first = false;
+
+                if ((i >> var) & 1) {
+                    term << "¬x" << (var + 1);
+                } else {
+                    term << "x" << (var + 1);
+                }
+            }
+            if (n == 0) {
+                term << "0";
+            }
+            maxterms.push_back("(" + term.str() + ")");
+        }
+    }
+
+    if (maxterms.empty()) return "1";
+
+    std::ostringstream result;
+    for (size_t i = 0; i < maxterms.size(); ++i) {
+        if (i > 0) result << " ∧ ";
+        result << maxterms[i];
+    }
+    return result.str();
+}

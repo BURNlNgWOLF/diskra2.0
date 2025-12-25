@@ -285,7 +285,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QTableWidget" name="tableWidget"/>
+          <widget class="QTableWidget" name="tableWidget">
+           <property name="dragDropOverwriteMode">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QWidget" name="widgetSDKNF" native="true">
@@ -293,22 +297,31 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
-               <widget class="QLabel" name="label_4">
+               <widget class="QLabel" name="labelSdnf">
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>PDNF(СДНФ)</string>
                 </property>
                </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="editSdnf"/>
               </item>
              </layout>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
-               <widget class="QLabel" name="label_5">
+               <widget class="QLabel" name="labelSknf">
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>PCNF(СКНФ)</string>
+                </property>
+                <property name="textFormat">
+                 <enum>Qt::TextFormat::PlainText</enum>
                 </property>
                </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="editSknf"/>
               </item>
              </layout>
             </item>

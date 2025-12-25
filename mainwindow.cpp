@@ -18,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableWidget->hide();
     ui->widgetSDKNF->hide();
     updateOutputVisibility();
+    ui->labelSknf->setStyleSheet("color: red;");
+    ui->labelSdnf->setStyleSheet("color: blue;");
 
     connect(ui->checkBoxZhegalkin, &QCheckBox::stateChanged,
             this, &MainWindow::updateOutputVisibility);
@@ -67,6 +69,8 @@ void MainWindow::on_submitInput_clicked()
         ui->stackedWidget->setCurrentIndex(1);
         displayTruthTableFromVector(ui->tableWidget, QStringTovector(text));
         ui->editZhegalkin->setText(QString::fromStdString(zhegalkinToString(zheg)));
+        ui->editSknf->setText(QString::fromStdString(calculateSKNF(QStringTovector(text))));
+        ui->editSdnf->setText(QString::fromStdString(calculateSDNF(QStringTovector(text))));
     }
 
 }
