@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QCheckBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,9 +18,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
 private slots:
     void on_submitInput_clicked();
+    void updateOutputVisibility();
+    void on_btnPage1_clicked();
+
+private:
+    Ui::MainWindow *ui;
+
+    void setupOutputOptions();
+    void updateLayoutSpacing();
 };
-#endif // MAINWINDOW_H
+
+#endif
