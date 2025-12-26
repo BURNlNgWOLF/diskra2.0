@@ -7,7 +7,7 @@ Use apt, pacman, or whatever your distro allows (package names way vary).
 ```
 g++ git cmake qt6-base-dev
 ```
-## Step 2: Build It!
+## Step 2: Build
 ```
 git clone https://github.com/BURNlNgWOLF/diskra2.0.git
 cd diskra2.0
